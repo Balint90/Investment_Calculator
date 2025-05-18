@@ -1,0 +1,27 @@
+@if (investmentService.getAnnualData) {
+<table>
+    <thead>
+        <tr>
+            <td>Year</td>
+            <td>Investment Value</td>
+            <td>Interest (Year)</td>
+            <td>Total Interest</td>
+            <td>Invested Capital</td>
+        </tr>
+    </thead>
+    <tbody>
+        @for (investment of investmentService.getAnnualData; track investment.year) {
+        <tr>
+            <td>{{ investment.year }}</td>
+            <td>{{ investment.valueEndOfYear }}</td>
+            <td>{{ investment.interest }}</td>
+            <td>{{ investment.totalInterest }}</td>
+            <td>{{ investment.totalAmountInvested }}</td>
+        </tr>
+        }
+    </tbody>
+</table>
+}
+@else {
+<h4 class="info">Please enter some values and press "Calculate".</h4>
+}
