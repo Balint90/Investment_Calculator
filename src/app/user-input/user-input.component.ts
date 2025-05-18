@@ -11,24 +11,25 @@ import { InvestmentService } from '../services/investment.service';
 })
 export class UserInputComponent {
 
-  @Output() userDataSubmit = new EventEmitter<void>();
-
   constructor(private investmentService: InvestmentService) { }
 
   enteredInitialInvestment: number = 0;
   enteredAnnualInvestment: number = 0;
-  enteredExpectedReturn: number = 0;
-  enteredDuration: number = 0;
+  enteredExpectedReturn: number = 5;
+  enteredDuration: number = 10;
 
   onSubmit() {
     const userFormData: UserFormInvestmentData = {
-      initialInvestment: this.enteredInitialInvestment,
-      annualInvestment: this.enteredAnnualInvestment,
-      expectedReturn: this.enteredExpectedReturn,
-      duration: this.enteredDuration,
+      initialInvestment: +this.enteredInitialInvestment,
+      annualInvestment: +this.enteredAnnualInvestment,
+      expectedReturn: +this.enteredExpectedReturn,
+      duration: +this.enteredDuration,
     }
 
     this.investmentService.calculateInvestmentResults(userFormData);
-    this.userDataSubmit.emit();
+    this.enteredInitialInvestment = 0;
+    this.enteredAnnualInvestment = 0;
+    this.enteredExpectedReturn = 5;
+    this.enteredDuration = 10;
   }
 }

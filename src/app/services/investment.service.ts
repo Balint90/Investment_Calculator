@@ -4,30 +4,30 @@ import { UserFormInvestmentData, type Investment } from "../investment-results/i
 @Injectable({ providedIn: 'root' })
 export class InvestmentService {
 
-    private annualData: Investment[] = [];
+    resultData?: Investment[];
 
     calculateInvestmentResults(userFormData: UserFormInvestmentData) {
-        this.annualData = [];
-        let investmentValue = userFormData.initialInvestment;
 
-        for (let i = 0; i < userFormData.duration; i++) {
+        const { initialInvestment, expectedReturn, annualInvestment, duration } = userFormData;
+        const annualData = [];
+        let investmentValue = initialInvestment;
+
+        for (let i = 0; i < duration; i++) {
             const year = i + 1;
-            const interestEarnedInYear = investmentValue * (userFormData.expectedReturn / 100);
-            investmentValue += interestEarnedInYear + userFormData.annualInvestment;
+            const interestEarnedInYear = investmentValue * (expectedReturn / 100);
+            investmentValue += interestEarnedInYear + annualInvestment;
             const totalInterest =
-                investmentValue - userFormData.annualInvestment * year - userFormData.initialInvestment;
-            this.annualData.push({
+                investmentValue - annualInvestment * year - initialInvestment;
+            annualData.push({
                 year: year,
                 interest: interestEarnedInYear,
                 valueEndOfYear: investmentValue,
-                annualInvestment: userFormData.annualInvestment,
+                annualInvestment: annualInvestment,
                 totalInterest: totalInterest,
-                totalAmountInvested: userFormData.initialInvestment + userFormData.annualInvestment * year,
+                totalAmountInvested: initialInvestment + annualInvestment * year,
             });
         }
-    }
 
-    get getAnnualData() {
-        return this.annualData;
+        this.resultData = annualData;
     }
 }

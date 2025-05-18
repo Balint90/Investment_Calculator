@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { InvestmentService } from '../services/investment.service';
+import { Investment } from './investment.model';
 
 @Component({
   selector: 'app-investment-results',
@@ -10,5 +11,7 @@ import { InvestmentService } from '../services/investment.service';
 export class InvestmentResultsComponent {
   constructor(public investmentService: InvestmentService) { }
 
-
+  get results() {
+    return this.investmentService.resultData;
+  }
 }
